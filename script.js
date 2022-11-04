@@ -14,6 +14,7 @@ let memDisplay2 = ''
 let result = 0
 let alreadyDot = false
 var lastDigit = ''
+let digitCount = 0
 
 numbers.forEach(number => {
     number.addEventListener('click', (e) => {
@@ -24,8 +25,10 @@ numbers.forEach(number => {
         if (mainDisplay.innerText == result) {
             memDisplay1 = ''
         }
+        if (digitCount >= 10) {return}
         memDisplay1 += e.target.innerText
         mainDisplay.innerText = memDisplay1
+        digitCount += 1
     })
 })
 
@@ -36,6 +39,7 @@ operations.forEach(symbol => {
         memDisplay1 += e.target.innerText
         mainDisplay.innerText = memDisplay1
         alreadyDot = false
+        digitCount = 0
     })
 })
 
@@ -47,6 +51,7 @@ equal.addEventListener('click', () => {
     memDisplay1 = result
     mainDisplay.innerText = result
     resulDisplay.innerText = result
+    digitCount = 0
 
 })
 
@@ -70,4 +75,26 @@ memory.addEventListener('click', () => {
     mainDisplay.innerText = memDisplay1
     }
 })
+
+window.addEventListener('keydown', (e) => {
+    if (e.key=== '0' || e.key=== '1' || e.key=== '2' || e.key=== '3' || e.key=== '4' ||
+    e.key=== '5' || e.key=== '6' || e.key=== '7' || e.key=== '8' || e.key===  '9' ){pressBtn(e.key)}
+    else if (e.key === '/' || e.key=== '*' || e.key=== '-' || e.key=== '+') {pressOperation(e.key)}
+    else if (e.key === '=' || e.key == 'Enter') {equal.click()}
+    else if (e.key === '.') {dot.click()}
+    else if (e.key == 'Backspace') {del.click()}
+
+})
+
+function pressBtn(key) {
+    numbers.forEach((button) => {
+        if (button.innerText === key) {button.click()}
+    })
+}
+
+function pressOperation(key) {
+    operations.forEach((button) => {
+        if (button.innerText === key) {button.click()}
+    })
+}
 
